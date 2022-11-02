@@ -1,5 +1,6 @@
 // importing modules
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 var LocalStrategy = require("passport-local");
 const passport = require("passport");
@@ -12,14 +13,18 @@ router.post("/register", function (req, res) {
     req.body.password,
     function (err, user) {
       if (err) {
-        res.json({
-          success: false,
+        return next({
+          status: 400,
           message: "Your account could not be saved. Error: " + err,
         });
       } else {
         req.login(user, (er) => {
-          if (er) {
-            res.json({ success: false, message: er });
+          if (err) {
+            return next({
+              status: 400,
+              message:
+                err?.message || "Something went wrong with registering user",
+            });
           } else {
             res.json({ success: true, message: "Your account has been saved" });
           }
@@ -29,70 +34,32 @@ router.post("/register", function (req, res) {
   );
 });
 
-router.post("/login", function (req, res) {
-  if (!req.body.username) {
-    res.json({ success: false, message: "Username was not given" });
-  } else if (!req.body.password) {
-    res.json({ success: false, message: "Password was not given" });
-  } else {
-    passport.authenticate("local", function (err, user, info) {
-      if (err) {
-        res.json({ success: false, message: err });
-      } else {
-        if (!user) {
-          res.json({
-            success: false,
-            message: "username or password incorrect",
-          });
-        } else {
-          const token = jwt.sign(
-            { userId: user._id, username: user.username },
-            secretkey,
-            { expiresIn: "24h" }
-          );
-          res.json({
-            success: true,
-            message: "Authentication successful",
-            token: token,
-          });
-        }
-      }
-    })(req, res);
-  }
+router.post("/login", function (req, res, next) {
+  passport.authenticate("local", function (hashingErr, user, passwordErr) {
+    const err = hashingErr || passwordErr;
+
+    if (err) {
+      return next({
+        status: 400,
+        message: err?.message || "Something went wrong during authentification",
+      });
+    }
+
+    if (!user) {
+      return next({ status: 400, message: "No users found" });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, username: user.username },
+      "po324kjhdsfsd0983",
+      { expiresIn: "24h" }
+    );
+    res.json({
+      success: true,
+      message: "Authentication successful",
+      token: token,
+    });
+  })(req, res);
 });
 
 module.exports = router;
-
-// const strategy = new LocalStrategy(function verify(username, password, cb) {
-//   db.get(
-//     "SELECT * FROM users WHERE username = ?",
-//     [username],
-//     function (err, user) {
-//       if (err) {
-//         return cb(err);
-//       }
-//       if (!user) {
-//         return cb(null, false, { message: "Incorrect username or password." });
-//       }
-
-//       crypto.pbkdf2(
-//         password,
-//         user.salt,
-//         310000,
-//         32,
-//         "sha256",
-//         function (err, hashedPassword) {
-//           if (err) {
-//             return cb(err);
-//           }
-//           if (!crypto.timingSafeEqual(user.hashed_password, hashedPassword)) {
-//             return cb(null, false, {
-//               message: "Incorrect username or password.",
-//             });
-//           }
-//           return cb(null, user);
-//         }
-//       );
-//     }
-//   );
-// });

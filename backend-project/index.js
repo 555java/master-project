@@ -6,6 +6,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
+const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -19,7 +20,6 @@ db.once("open", () => {
   console.log("Data base connexted");
 });
 
-app.use(express.static("public"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,6 +28,10 @@ app.use(
     secret: "Shh, its a secret!",
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost:27017/backend-project",
+      ttl: 14 * 24 * 60 * 60,
+    }),
   })
 );
 //passport
@@ -44,6 +48,13 @@ const port = 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello Backend");
+});
+
+app.use((err, req, res, next) => {
+  const status = err?.status || 500;
+  const message = err?.message || "Server error";
+
+  res.status(status).json({ isSuccess: false, message });
 });
 
 app.listen(port, () => {
