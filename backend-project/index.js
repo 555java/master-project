@@ -44,7 +44,7 @@ passport.deserializeUser(User.deserializeUser());
 passport.use(new LocalStrategy(User.authenticate()));
 app.use("/", userRoute);
 
-const port = 8080;
+const port = 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello Backend");
