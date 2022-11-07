@@ -1,2 +1,1 @@
-export const TOGGLE_IS_LOGGED_IN = "auth/TOGGLE_IS_LOGGED_IN";
-export const SWITCH_AUTH_FORMS = "auth/SWITCH_AUTH_FORMS";
+export const SET_IS_LOGGED_IN = "auth/SET_ISLOGGEDIN";
