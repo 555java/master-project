@@ -7,7 +7,7 @@ const passport = require("passport");
 // importing User Schema
 const User = require("../models/userModel");
 
-router.post("/register", function (req, res) {
+router.post("/register", function (req, res, next) {
   User.register(
     new User({ email: req.body.email, username: req.body.username }),
     req.body.password,
