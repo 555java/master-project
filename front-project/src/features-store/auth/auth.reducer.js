@@ -1,4 +1,4 @@
-import { SET_IS_LOGGED_IN } from "./auth.constants";
+import { TOGGLE_IS_LOGGED_IN } from "./auth.constants";
 
 const initialState = {
   isLoggedIn: true,
@@ -6,7 +6,7 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_IS_LOGGED_IN:
+    case TOGGLE_IS_LOGGED_IN:
       return { ...state, isLoggedIn: !state.isLoggedIn };
     default:
       return state;
