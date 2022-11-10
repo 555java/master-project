@@ -3,11 +3,10 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import SignInForm from "./components/signInForm.component";
-import SignUpForm from "./components/signUpForm.component";
-
+import { SignInPage } from "./routes/SignInPage";
+import { SignUpPage } from "./routes/SignUpPage";
 import App from "./app/App";
-import { AuthPage } from "./routes/authPage/authPage.component";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const router = createBrowserRouter([
   {
@@ -15,24 +14,34 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "auth",
-    element: <AuthPage />,
-  },
-  {
     path: "/signin",
-    element: <SignInForm />,
+    element: <SignInPage />,
   },
   {
     path: "/register",
-    element: <SignUpForm />,
+    element: <SignUpPage />,
   },
 ]);
+
+const theme = createTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#8e24aa",
+    },
+    secondary: {
+      main: "#b39ddb",
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );
