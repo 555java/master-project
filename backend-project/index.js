@@ -12,6 +12,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 const userRoute = require("./src/route/userRoute");
+const cors = require("cors");
 
 mongoose.connect("mongodb://localhost:27017/backend-project");
 const db = mongoose.connection;
@@ -20,6 +21,13 @@ db.once("open", () => {
   console.log("Data base connexted");
 });
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    allowedHeaders: ["content-type"],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -13,8 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
+import { useSelector } from "react-redux";
+import { store } from "../app/store";
+import { signInUserThunk } from "../features-store/auth/auth.thunks";
 
 export default function SignInForm() {
+  const err = useSelector((state) => state.auth.err);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -35,8 +39,8 @@ export default function SignInForm() {
         <Form
           onSubmit={(values) => {
             const errors = {};
-            if (!values.email) {
-              errors.email = "Email required";
+            if (!values.username) {
+              errors.username = "username required";
             }
             if (!values.password) {
               errors.password = "Password required";
@@ -44,7 +48,11 @@ export default function SignInForm() {
             if (Object.keys(errors).length) {
               return errors;
             }
-            console.log(values);
+
+            if (Object.keys(errors).length === 0) {
+              console.log("inside thunk");
+              store.dispatch(signInUserThunk({ ...values }));
+            }
           }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Box
@@ -58,10 +66,10 @@ export default function SignInForm() {
                   <Field
                     component={TextFieldAdapter}
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                   />
                 </Grid>
@@ -101,6 +109,7 @@ export default function SignInForm() {
                   </Link>
                 </Grid>
               </Grid>
+              <Grid>{err}</Grid>
             </Box>
           )}
         />

@@ -11,8 +11,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
+import { store } from "../app/store";
+import { signUpUserThunk } from "../features-store/auth/auth.thunks";
+import { useSelector } from "react-redux";
 
 export default function SignUpForm({ toggleFormType }) {
+  const err = useSelector((state) => state.auth.err);
+  console.log(err);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -50,7 +55,10 @@ export default function SignUpForm({ toggleFormType }) {
             if (Object.keys(errors).length) {
               return errors;
             }
-            console.log(values);
+            if (Object.keys(errors).length === 0) {
+              console.log("inside thunk");
+              store.dispatch(signUpUserThunk({ ...values }));
+            }
           }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Box
@@ -129,6 +137,8 @@ export default function SignUpForm({ toggleFormType }) {
                   </Link>
                 </Grid>
               </Grid>
+
+              <Grid>{err}</Grid>
             </Box>
           )}
         />

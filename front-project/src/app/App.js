@@ -1,5 +1,11 @@
+import { useSelector } from "react-redux";
+
 function App() {
-  return <div>Hello Frontend</div>;
+  const user = useSelector((state) => state.auth.user);
+  console.log("USER:", user);
+  return (
+    <div>Hello Frontend User:{user ? JSON.stringify(user) : "no user"}</div>
+  );
 }
 
 export default App;

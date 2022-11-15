@@ -15,7 +15,7 @@ router.post("/register", function (req, res, next) {
       if (err) {
         return next({
           status: 400,
-          message: "Your account could not be saved. Error: " + err,
+          message: "Your account could not be saved. Error: " + err.message,
         });
       } else {
         req.login(user, (er) => {
@@ -26,7 +26,11 @@ router.post("/register", function (req, res, next) {
                 err?.message || "Something went wrong with registering user",
             });
           } else {
-            res.json({ success: true, message: "Your account has been saved" });
+            res.json({
+              success: true,
+              message: "Your account has been saved",
+              data: { user: user.toJSON() },
+            });
           }
         });
       }
@@ -57,6 +61,7 @@ router.post("/login", function (req, res, next) {
     res.json({
       success: true,
       message: "Authentication successful",
+      data: { user: user.toJSON() },
       token: token,
     });
   })(req, res);
