@@ -91,19 +91,14 @@ const fetchDB = (path, userOptions = {}) => {
       .catch((error) => {
         // Throw custom API error
         // If response exists it means HTTP error occured
-        // if (response) {
-        //   throw new ApiError(
-        //     `Request failed from Api.js with status ${response.status}.`,
-        //     error,
-        //     response.status
-        //   );
-        // } else {
-        //   throw new ApiError(error.toString(), null, "REQUEST_FAILED");
-        // }
         if (response) {
-          console.log(response);
-          console.log(JSON.parse(error));
-          throw error;
+          throw new ApiError(
+            `Request failed from Api.js with status ${response.status}.`,
+            error,
+            response.status
+          );
+        } else {
+          throw new ApiError(error.toString(), null, "REQUEST_FAILED");
         }
       })
   );

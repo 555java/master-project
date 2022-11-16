@@ -11,13 +11,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
-import { store } from "../app/store";
+import { useDispatch } from "react-redux";
 import { signUpUserThunk } from "../features-store/auth/auth.thunks";
-import { useSelector } from "react-redux";
+import { Alert } from "@mui/material";
 
 export default function SignUpForm({ toggleFormType }) {
-  const err = useSelector((state) => state.auth.err);
-  console.log(err);
+  const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -55,12 +54,17 @@ export default function SignUpForm({ toggleFormType }) {
             if (Object.keys(errors).length) {
               return errors;
             }
-            if (Object.keys(errors).length === 0) {
-              console.log("inside thunk");
-              store.dispatch(signUpUserThunk({ ...values }));
-            }
+            return dispatch(signUpUserThunk({ ...values }));
           }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
+          render={({
+            submitError,
+            handleSubmit,
+            submitFailed,
+            form,
+            submitting,
+            pristine,
+            values,
+          }) => (
             <Box
               component="form"
               noValidate
@@ -68,7 +72,7 @@ export default function SignUpForm({ toggleFormType }) {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={12}>
                   <Field
                     component={TextFieldAdapter}
                     name="username"
@@ -116,7 +120,14 @@ export default function SignUpForm({ toggleFormType }) {
                     autoComplete="new-password"
                   />
                 </Grid>
+
+                {submitError && (
+                  <Grid item xs={12}>
+                    <Alert severity="error">{submitError} </Alert>
+                  </Grid>
+                )}
               </Grid>
+
               <Button
                 type="submit"
                 fullWidth
@@ -137,8 +148,6 @@ export default function SignUpForm({ toggleFormType }) {
                   </Link>
                 </Grid>
               </Grid>
-
-              <Grid>{err}</Grid>
             </Box>
           )}
         />

@@ -13,12 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
-import { useSelector } from "react-redux";
-import { store } from "../app/store";
 import { signInUserThunk } from "../features-store/auth/auth.thunks";
+import { useDispatch } from "react-redux";
+import { Alert } from "@mui/material";
 
 export default function SignInForm() {
-  const err = useSelector((state) => state.auth.err);
+  const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -48,13 +48,16 @@ export default function SignInForm() {
             if (Object.keys(errors).length) {
               return errors;
             }
-
-            if (Object.keys(errors).length === 0) {
-              console.log("inside thunk");
-              store.dispatch(signInUserThunk({ ...values }));
-            }
+            return dispatch(signInUserThunk({ ...values }));
           }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
+          render={({
+            handleSubmit,
+            submitError,
+            form,
+            submitting,
+            pristine,
+            values,
+          }) => (
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -84,6 +87,11 @@ export default function SignInForm() {
                     autoComplete="current-password"
                   />
                 </Grid>
+                {submitError && (
+                  <Grid item xs={12}>
+                    <Alert severity="error">{submitError} </Alert>
+                  </Grid>
+                )}
               </Grid>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -109,7 +117,6 @@ export default function SignInForm() {
                   </Link>
                 </Grid>
               </Grid>
-              <Grid>{err}</Grid>
             </Box>
           )}
         />
