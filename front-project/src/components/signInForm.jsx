@@ -13,8 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
+import { signInUserThunk } from "../features-store/auth/auth.thunks";
+import { useDispatch } from "react-redux";
+import { Alert } from "@mui/material";
 
 export default function SignInForm() {
+  const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -35,8 +39,8 @@ export default function SignInForm() {
         <Form
           onSubmit={(values) => {
             const errors = {};
-            if (!values.email) {
-              errors.email = "Email required";
+            if (!values.username) {
+              errors.username = "username required";
             }
             if (!values.password) {
               errors.password = "Password required";
@@ -44,9 +48,16 @@ export default function SignInForm() {
             if (Object.keys(errors).length) {
               return errors;
             }
-            console.log(values);
+            return dispatch(signInUserThunk({ ...values }));
           }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
+          render={({
+            handleSubmit,
+            submitError,
+            form,
+            submitting,
+            pristine,
+            values,
+          }) => (
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -58,10 +69,10 @@ export default function SignInForm() {
                   <Field
                     component={TextFieldAdapter}
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                   />
                 </Grid>
@@ -76,6 +87,11 @@ export default function SignInForm() {
                     autoComplete="current-password"
                   />
                 </Grid>
+                {submitError && (
+                  <Grid item xs={12}>
+                    <Alert severity="error">{submitError} </Alert>
+                  </Grid>
+                )}
               </Grid>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

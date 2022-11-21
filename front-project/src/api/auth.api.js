@@ -1,12 +1,16 @@
 import fetchDB from "../utils/api";
 
 export const authApi = {
-  signIn({ email, password }) {
+  signIn({ username, password }) {
     return fetchDB("login", {
       method: "POST",
       body: {
-        email: email,
-        password: password,
+        username,
+        password,
+      },
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
       },
     });
   },
@@ -18,6 +22,10 @@ export const authApi = {
         username: username,
         email: email,
         password: password,
+      },
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
       },
     });
   },

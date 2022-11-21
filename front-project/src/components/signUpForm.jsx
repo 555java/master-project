@@ -11,8 +11,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
+import { useDispatch } from "react-redux";
+import { signUpUserThunk } from "../features-store/auth/auth.thunks";
+import { Alert } from "@mui/material";
 
 export default function SignUpForm({ toggleFormType }) {
+  const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -50,9 +54,17 @@ export default function SignUpForm({ toggleFormType }) {
             if (Object.keys(errors).length) {
               return errors;
             }
-            console.log(values);
+            return dispatch(signUpUserThunk({ ...values }));
           }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
+          render={({
+            submitError,
+            handleSubmit,
+            submitFailed,
+            form,
+            submitting,
+            pristine,
+            values,
+          }) => (
             <Box
               component="form"
               noValidate
@@ -60,7 +72,7 @@ export default function SignUpForm({ toggleFormType }) {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={12}>
                   <Field
                     component={TextFieldAdapter}
                     name="username"
@@ -108,7 +120,14 @@ export default function SignUpForm({ toggleFormType }) {
                     autoComplete="new-password"
                   />
                 </Grid>
+
+                {submitError && (
+                  <Grid item xs={12}>
+                    <Alert severity="error">{submitError} </Alert>
+                  </Grid>
+                )}
               </Grid>
+
               <Button
                 type="submit"
                 fullWidth

@@ -1,13 +1,13 @@
-import { TOGGLE_IS_LOGGED_IN } from "./auth.constants";
+import { AUTH_SET_USER } from "./auth.constants";
 
 const initialState = {
-  isLoggedIn: true,
+  user: null,
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_IS_LOGGED_IN:
-      return { ...state, isLoggedIn: !state.isLoggedIn };
+    case AUTH_SET_USER:
+      return { ...state, user: action.payload };
     default:
       return state;
   }

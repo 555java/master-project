@@ -93,7 +93,7 @@ const fetchDB = (path, userOptions = {}) => {
         // If response exists it means HTTP error occured
         if (response) {
           throw new ApiError(
-            `Request failed with status ${response.status}.`,
+            `Request failed from Api.js with status ${response.status}.`,
             error,
             response.status
           );

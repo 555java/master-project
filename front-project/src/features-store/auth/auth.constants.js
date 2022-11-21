@@ -1,1 +1,1 @@
-export const TOGGLE_IS_LOGGED_IN = "auth/TOGGLE_IS_LOGGED_IN";
+export const AUTH_SET_USER = "auth/AUTH_SET_USER";

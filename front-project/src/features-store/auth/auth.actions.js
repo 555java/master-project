@@ -1,5 +1,5 @@
-import { TOGGLE_IS_LOGGED_IN } from "./auth.constants";
+import { AUTH_SET_USER } from "./auth.constants";
 
-export const setIsLoggedIn = () => {
-  return { type: TOGGLE_IS_LOGGED_IN };
+export const setUser = (user) => {
+  return { type: AUTH_SET_USER, payload: user };
 };
