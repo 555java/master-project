@@ -1,8 +1,5 @@
-import { AUTH_SIGN_UP, AUTH_SIGN_IN } from "./auth.constants";
+import { AUTH_SET_USER } from "./auth.constants";
 
-export const signIn = (user) => {
-  return { type: AUTH_SIGN_IN, payload: user };
-};
-export const signUp = (user) => {
-  return { type: AUTH_SIGN_UP, payload: user };
+export const setUser = (user) => {
+  return { type: AUTH_SET_USER, payload: user };
 };

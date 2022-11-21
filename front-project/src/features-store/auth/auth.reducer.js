@@ -1,4 +1,4 @@
-import { AUTH_SIGN_IN, AUTH_SIGN_UP } from "./auth.constants";
+import { AUTH_SET_USER } from "./auth.constants";
 
 const initialState = {
   user: null,
@@ -6,11 +6,8 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_SIGN_IN:
+    case AUTH_SET_USER:
       return { ...state, user: action.payload };
-    case AUTH_SIGN_UP:
-      return { ...state, user: action.payload };
-
     default:
       return state;
   }

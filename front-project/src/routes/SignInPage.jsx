@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import SignInForm from "../components/SignInForm";
+import { getIsLoggedIn } from "../features-store/auth/auth.selectors";
 
 export const SignInPage = () => {
-  const user = useSelector((state) => state.auth.user);
-  const isAuthLoading = useSelector((state) => state.auth.isAuthLoading);
-
-  return user && !isAuthLoading ? <Navigate to="/" /> : <SignInForm />;
+  const user = useSelector(getIsLoggedIn);
+  return user ? <Navigate to="/" /> : <SignInForm />;
 };
