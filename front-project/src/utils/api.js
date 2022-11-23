@@ -53,7 +53,6 @@ const fetchDB = (path, userOptions = {}) => {
 
   // Variable which will be used for storing response
   let response = null;
-
   return (
     fetch(url, options)
       .then((responseObject) => {
