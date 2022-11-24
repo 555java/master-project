@@ -29,4 +29,25 @@ export const authApi = {
       },
     });
   },
+
+  loadUser() {
+    return fetchDB("user", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  },
+
+  logOut() {
+    return fetchDB("logout", {
+      method: "POST",
+      body: {},
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  },
 };

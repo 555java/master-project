@@ -18,7 +18,7 @@ router.post("/register", function (req, res, next) {
           message: "Your account could not be saved. Error: " + err.message,
         });
       } else {
-        req.login(user, (er) => {
+        req.login(user, (err) => {
           if (err) {
             return next({
               status: 400,
@@ -53,18 +53,40 @@ router.post("/login", function (req, res, next) {
       return next({ status: 400, message: "No users found" });
     }
 
-    const token = jwt.sign(
-      { userId: user._id, username: user.username },
-      "po324kjhdsfsd0983",
-      { expiresIn: "24h" }
-    );
-    res.json({
-      success: true,
-      message: "Authentication successful",
-      data: { user: user.toJSON() },
-      token: token,
+    req.login(user, (err) => {
+      if (err) {
+        return next({
+          status: 400,
+          message: err?.message || "Something went wrong with registering user",
+        });
+      } else {
+        res.json({
+          success: true,
+          message: "Authentication successful",
+          data: { user: user.toJSON() },
+        });
+      }
     });
   })(req, res);
+});
+
+router.get("/user", function (req, res, next) {
+  return res.json({ user: req.user || null });
+});
+
+router.post("/logout", function (req, res, next) {
+  req.logOut((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.session.destroy((err) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      return res.send({ success: true });
+    });
+  });
 });
 
 module.exports = router;

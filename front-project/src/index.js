@@ -7,6 +7,7 @@ import { SignInPage } from "./routes/SignInPage";
 import { SignUpPage } from "./routes/SignUpPage";
 import App from "./app/App";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { getUserThunk } from "./features-store/auth/auth.thunks";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,8 @@ const theme = createTheme({
   },
 });
 
+store.dispatch(getUserThunk());
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -45,5 +48,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
-store.dispatch({ type: "init" });

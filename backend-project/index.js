@@ -34,8 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "Shh, its a secret!",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: "mongodb://localhost:27017/backend-project",
       ttl: 14 * 24 * 60 * 60,
