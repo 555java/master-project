@@ -8,19 +8,22 @@ import { SignUpPage } from "./routes/SignUpPage";
 import App from "./app/App";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { getUserThunk } from "./features-store/auth/auth.thunks";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/signin",
-    element: <SignInPage />,
-  },
-  {
-    path: "/register",
-    element: <SignUpPage />,
+    children: [
+      {
+        path: "/signin",
+        element: <SignInPage />,
+      },
+      {
+        path: "/register",
+        element: <SignUpPage />,
+      },
+    ],
   },
 ]);
 
@@ -43,6 +46,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <RouterProvider router={router} />
       </ThemeProvider>
     </Provider>
