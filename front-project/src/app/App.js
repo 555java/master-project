@@ -1,17 +1,14 @@
 import { Fragment } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getIsLoggingOut,
   getIsUserLoading,
-  getUser,
 } from "../features-store/auth/auth.selectors";
-import { Box, Button, Grid } from "@mui/material";
-import { logoutUserThunk } from "../features-store/auth/auth.thunks";
+import { Box, Grid } from "@mui/material";
+import { MainLayout } from "../components/MainLayout";
 
 function App() {
-  const user = useSelector(getUser);
-  const dispatch = useDispatch();
   const userLoader = useSelector(getIsUserLoading);
   const logoutLoader = useSelector(getIsLoggingOut);
 
@@ -33,8 +30,7 @@ function App() {
     </Fragment>
   ) : (
     <Fragment>
-      <div>Hello Frontend User:{user ? JSON.stringify(user) : "no user"}</div>
-      <Button onClick={() => dispatch(logoutUserThunk())}>logOut</Button>
+      <MainLayout />
     </Fragment>
   );
 }

@@ -2,7 +2,6 @@ import * as React from "react";
 import { Form, Field } from "react-final-form";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -21,7 +20,6 @@ export default function SignInForm() {
   const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -105,8 +103,13 @@ export default function SignInForm() {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
+              <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item>
                   <Link href="#" variant="body2">
                     {"Forgot password?"}
                   </Link>
