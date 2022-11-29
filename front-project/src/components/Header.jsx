@@ -15,7 +15,7 @@ import { Link } from "@mui/material";
 import AccountMenu from "./AccountMenu";
 
 export default function Header() {
-  const isLogged = useSelector(getIsLoggedIn);
+  const isLoggedIn = useSelector(getIsLoggedIn);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <Box>
@@ -36,7 +36,7 @@ export default function Header() {
           <SideBar
             setIsDrawerOpen={setIsDrawerOpen}
             isOpen={isDrawerOpen}
-            isLogged={isLogged}
+            isLogged={isLoggedIn}
           />
           <Link
             variant="h6"
@@ -52,7 +52,7 @@ export default function Header() {
           >
             FakeApp
           </Link>
-          {!isLogged ? (
+          {!isLoggedIn ? (
             <Fragment>
               <Button
                 size="small"

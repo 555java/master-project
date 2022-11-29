@@ -56,8 +56,9 @@ const letters = [
   "y",
   "z",
 ];
-export const getRandomColor = (name) => {
-  if (name.slice(0, 1).toLowerCase()) {
-    return colors[letters.indexOf(name.slice(0, 1).toLowerCase())];
-  } else return colors(25);
+export const nameToColor = (name) => {
+  const letterIndex = letters.indexOf(name.slice(0, 1).toLowerCase());
+  if (letterIndex !== -1) {
+    return colors[letterIndex];
+  } else return colors[26];
 };

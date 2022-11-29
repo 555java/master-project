@@ -8,12 +8,12 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
-import { getRandomColor } from "../utils/getRandomAccountColor";
+import { nameToColor } from "../utils/getRandomAccountColor";
 import { useSelector } from "react-redux";
-import { getUser } from "../features-store/auth/auth.selectors";
+import { getUserName } from "../features-store/auth/auth.selectors";
 
 export default function AccountMenu() {
-  const userName = useSelector(getUser).username;
+  const userName = useSelector(getUserName);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -22,7 +22,7 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const avatarColor = getRandomColor(userName);
+  const avatarColor = nameToColor(userName);
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
