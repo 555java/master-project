@@ -9,6 +9,7 @@ import App from "./app/App";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { getUserThunk } from "./features-store/auth/auth.thunks";
 import CssBaseline from "@mui/material/CssBaseline";
+import PostUploadForm from "./routes/PostUploadForm";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
         path: "/register",
         element: <SignUpPage />,
       },
+      {
+        path: "/posts/new",
+        element: <PostUploadForm />,
+      },
     ],
   },
 ]);
@@ -35,6 +40,9 @@ const theme = createTheme({
     },
     secondary: {
       main: "#b39ddb",
+    },
+    accent1: {
+      main: "#d2baff4d",
     },
   },
 });

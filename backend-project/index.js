@@ -12,6 +12,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 const userRoute = require("./src/route/userRoute");
+const postsRoute = require("./src/route/postsRoute");
 const cors = require("cors");
 
 mongoose.connect("mongodb://localhost:27017/backend-project");
@@ -51,6 +52,7 @@ passport.deserializeUser(User.deserializeUser());
 
 passport.use(new LocalStrategy(User.authenticate()));
 app.use("/", userRoute);
+app.use("/", postsRoute);
 
 const port = 8080;
 
