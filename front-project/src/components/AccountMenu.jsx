@@ -4,15 +4,18 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import { nameToColor } from "../utils/getRandomAccountColor";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserName } from "../features-store/auth/auth.selectors";
+import { logoutUserThunk } from "../features-store/auth/auth.thunks";
 
 export default function AccountMenu() {
+  const dispatch = useDispatch();
   const userName = useSelector(getUserName);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -82,12 +85,18 @@ export default function AccountMenu() {
         <MenuItem>
           <Avatar /> My account
         </MenuItem>
-        <Divider />
         <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={() => dispatch(logoutUserThunk())}>
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" />
+          </ListItemIcon>
+          Logout
         </MenuItem>
       </Menu>
     </React.Fragment>
