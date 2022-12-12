@@ -6,6 +6,7 @@ import {
 } from "../features-store/auth/auth.selectors";
 import { Box, Grid } from "@mui/material";
 import { MainLayout } from "../components/MainLayout";
+import { React } from "react";
 
 function App() {
   const isUserLoading = useSelector(getIsUserLoading);

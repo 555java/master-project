@@ -10,15 +10,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { Alert, AlertTitle, Typography } from "@mui/material";
 import { addPostThunk } from "../features-store/posts/posts.thunks";
 import { getUserId } from "../features-store/auth/auth.selectors";
+import { FileField } from "../components/FileFieldAdapter";
+import { getIsPostLoading } from "../features-store/posts/posts.selectors";
 
 export default function PostUploadForm() {
+  const isPostLoading = useSelector(getIsPostLoading);
   const authorId = useSelector(getUserId);
   const dispatch = useDispatch();
-  const isDisabled = !authorId;
+  const isDisabled = !authorId || isPostLoading;
+  console.log(isPostLoading);
+  console.log(isDisabled);
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 8 }}>
       <Form
         onSubmit={(values) => {
+          // console.log(values);
           const errors = {};
           if (!values.description) {
             errors.description = "Please, fill the description!";
@@ -27,7 +33,7 @@ export default function PostUploadForm() {
             errors.title = "Please, fill the title!";
           }
           if (Object.keys(errors).length) {
-            console.log(errors);
+            // console.log(errors);
             return errors;
           }
           return dispatch(
@@ -35,11 +41,17 @@ export default function PostUploadForm() {
               authorId: authorId,
               description: values.description,
               title: values.title,
+              images: values.imageFiles,
             })
           );
         }}
         render={({ handleSubmit, submitError }) => (
-          <Box component="form" onSubmit={handleSubmit} noValidate>
+          <Box
+            component="form"
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+            noValidate
+          >
             <Grid
               container
               direction="column"
@@ -65,7 +77,15 @@ export default function PostUploadForm() {
                   component="label"
                 >
                   Upload File
-                  <input hidden accept="image/*" multiple type="file" />
+                  <FileField
+                    style={{ backgroundColor: "red" }}
+                    name="imageFiles"
+                    id="imageFiles"
+                    label="imageFiles"
+                    multiple
+                    type="file"
+                    hidden
+                  ></FileField>
                 </Button>
               </Grid>
               <Grid xs={10}>
@@ -96,6 +116,7 @@ export default function PostUploadForm() {
               <Grid xs={8}>
                 {authorId ? (
                   <Button
+                    disabled={isDisabled}
                     type="submit"
                     fullWidth
                     variant="contained"
