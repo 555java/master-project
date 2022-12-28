@@ -58,4 +58,18 @@ router.post(
   }
 );
 
+router.get("/posts/:postId", async function (req, res, next) {
+  try {
+    console.log(req.params.postId);
+    const post = await Post.findById(req.params.postId);
+    if (post) {
+      return res.send({ success: true, post: post });
+    } else {
+      throw new Error("Failed to find the post");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

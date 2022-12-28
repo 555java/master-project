@@ -18,13 +18,10 @@ export default function PostUploadForm() {
   const authorId = useSelector(getUserId);
   const dispatch = useDispatch();
   const isDisabled = !authorId || isPostLoading;
-  console.log(isPostLoading);
-  console.log(isDisabled);
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 8 }}>
       <Form
         onSubmit={(values) => {
-          // console.log(values);
           const errors = {};
           if (!values.description) {
             errors.description = "Please, fill the description!";
@@ -33,7 +30,6 @@ export default function PostUploadForm() {
             errors.title = "Please, fill the title!";
           }
           if (Object.keys(errors).length) {
-            // console.log(errors);
             return errors;
           }
           return dispatch(

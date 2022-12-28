@@ -10,14 +10,20 @@ export const postsApi = {
     payload.append("authorId", authorId);
     payload.append("description", description);
     payload.append("title", title);
-    // and then just post it to your API using a regular POST:
-    // for (var key of payload.entries()) {
-    //   console.log(key[0] + ", " + key[1]);
-    // }
+
     return fetchDB("posts/new", {
       method: "POST",
       body: payload,
       credentials: "include",
+    });
+  },
+  loadPost(postId) {
+    return fetchDB(`posts/${postId}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
     });
   },
 };
