@@ -10,6 +10,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { getUserThunk } from "./features-store/auth/auth.thunks";
 import CssBaseline from "@mui/material/CssBaseline";
 import PostUploadForm from "./routes/PostUploadForm";
+import PostPage from "./routes/PostPage";
+import { PostsListPage } from "./routes/PostsListPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,8 @@ const router = createBrowserRouter([
         path: "/posts/new",
         element: <PostUploadForm />,
       },
+      { path: "/posts/:postId", element: <PostPage /> },
+      { path: "/posts", element: <PostsListPage /> },
     ],
   },
 ]);
@@ -51,12 +55,12 @@ store.dispatch(getUserThunk());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  </Provider>
+  // </React.StrictMode>
 );

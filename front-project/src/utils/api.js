@@ -44,10 +44,16 @@ const fetchDB = (path, userOptions = {}) => {
 
   // Detect is we are uploading a file
   const isFile = options.body instanceof File;
+  const isFormData = options.body instanceof FormData;
 
   // Stringify JSON data
   // If body is not a file
-  if (options.body && typeof options.body === "object" && !isFile) {
+  if (
+    options.body &&
+    typeof options.body === "object" &&
+    !isFile &&
+    !isFormData
+  ) {
     options.body = JSON.stringify(options.body);
   }
 
