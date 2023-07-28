@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
+import { createAppStore } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SignInPage } from "./routes/SignInPage";
 import { SignUpPage } from "./routes/SignUpPage";
@@ -11,7 +11,10 @@ import { getUserThunk } from "./features-store/auth/auth.thunks";
 import CssBaseline from "@mui/material/CssBaseline";
 import PostUploadForm from "./routes/PostUploadForm";
 import PostPage from "./routes/PostPage";
-import { PostsListPage } from "./routes/PostsListPage";
+import { UserPostsListPage } from "./routes/UserPostsListPage";
+import { AboutPage } from "./routes/AboutPage";
+import { SubscriptionsList } from "./routes/SubscriptionsPage";
+import { ExplorePage } from "./routes/ExplorePage";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +34,10 @@ const router = createBrowserRouter([
         element: <PostUploadForm />,
       },
       { path: "/posts/:postId", element: <PostPage /> },
-      { path: "/posts", element: <PostsListPage /> },
+      { path: "/posts/user/:userId", element: <UserPostsListPage /> },
+      { path: "/user/:userId/subscriptions", element: <SubscriptionsList /> },
+      { path: "/about", element: <AboutPage /> },
+      { path: "/explore", element: <ExplorePage /> },
     ],
   },
 ]);
@@ -50,7 +56,7 @@ const theme = createTheme({
     },
   },
 });
-
+const store = createAppStore(router);
 store.dispatch(getUserThunk());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -1,43 +1,38 @@
 import {
-  POSTS_ADD_POST_START,
-  POSTS_ADD_POST_SUCCESS,
-  POSTS_ADD_POST_ERROR,
-  POSTS_LOAD_POST_START,
-  POSTS_LOAD_POST_SUCCESS,
-  POSTS_LOAD_POST_ERROR,
+  POSTS_LOAD_USER_POSTS_START,
+  POSTS_LOAD_USER_POSTS_SUCCESS,
+  POSTS_LOAD_USER_POSTS_ERROR,
 } from "./posts.constants";
 
 const initialState = {
+  browsedUser: null,
+  isPostsLoading: true,
   posts: [],
-  isPostLoading: false,
-  error: null,
+  postsError: false,
 };
 export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case POSTS_ADD_POST_START:
-      return { ...state, isPostLoading: true };
-    case POSTS_ADD_POST_SUCCESS:
+    case POSTS_LOAD_USER_POSTS_START:
       return {
         ...state,
-        posts: state.posts.concat(action.payload),
-        isPostLoading: false,
+        isPostsLoading: true,
+        postsError: null,
+        browsedUser: null,
       };
-    case POSTS_ADD_POST_ERROR:
+    case POSTS_LOAD_USER_POSTS_SUCCESS:
       return {
         ...state,
-        isPostLoading: false,
+        browsedUser: {
+          username: action.payload.username,
+          email: action.payload.email,
+          _id: action.payload._id,
+        },
+        posts: action.payload.posts,
+        isPostsLoading: false,
       };
+    case POSTS_LOAD_USER_POSTS_ERROR:
+      return { ...state, isPostsLoading: false, postsError: action.payload };
 
-    case POSTS_LOAD_POST_START:
-      return { ...state, isPostLoading: true };
-    case POSTS_LOAD_POST_SUCCESS:
-      return {
-        ...state,
-        posts: state.posts.concat(action.payload),
-        isPostLoading: false,
-      };
-    case POSTS_LOAD_POST_ERROR:
-      return { ...state, isPostLoading: false, error: action.payload };
     default:
       return state;
   }

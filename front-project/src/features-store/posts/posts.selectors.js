@@ -1,8 +1,15 @@
-export const getIsPostLoading = (state) => state.posts.isPostLoading;
-export const getPostsById = (state, postId) =>
-  state.posts.posts.find((post) => post._id === postId);
-export const getNumberOfImages = (state, postId) => {
-  const post = state.posts.posts.find((post) => post._id === postId);
-  return post ? post.image.length : undefined;
+export const getIsPostsLoading = (state) => state.posts.isPostsLoading;
+
+export const getPostsError = (state) => state.posts.postsError;
+
+export const getBrowsedUserPosts = (state, userId) => {
+  if (state.posts.browsedUser && state.posts.browsedUser.id === userId)
+    return state.posts.posts;
+  return undefined;
 };
-export const getPostError = (state) => state.posts.error;
+
+export const getBrowsedUser = (state, userId) => {
+  if (state.posts.browsedUser && state.posts.browsedUser.id === userId)
+    return state.posts.browsedUser;
+  return undefined;
+};

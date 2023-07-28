@@ -1,30 +1,15 @@
 import {
-  POSTS_ADD_POST_ERROR,
-  POSTS_ADD_POST_START,
-  POSTS_ADD_POST_SUCCESS,
-  POSTS_LOAD_POST_ERROR,
-  POSTS_LOAD_POST_START,
-  POSTS_LOAD_POST_SUCCESS,
+  POSTS_LOAD_USER_POSTS_ERROR,
+  POSTS_LOAD_USER_POSTS_START,
+  POSTS_LOAD_USER_POSTS_SUCCESS,
 } from "./posts.constants";
 
-export const addPostStart = () => {
-  return { type: POSTS_ADD_POST_START };
+export const loadUserPostsStart = () => {
+  return { type: POSTS_LOAD_USER_POSTS_START };
 };
-
-export const addPostSuccess = (post) => {
-  return { type: POSTS_ADD_POST_SUCCESS, payload: post };
+export const loadUserPostsError = (error) => {
+  return { type: POSTS_LOAD_USER_POSTS_ERROR, payload: error };
 };
-
-export const addPostError = () => {
-  return { type: POSTS_ADD_POST_ERROR };
-};
-
-export const loadPostStart = () => {
-  return { type: POSTS_LOAD_POST_START };
-};
-export const loadPostError = (error) => {
-  return { type: POSTS_LOAD_POST_ERROR, payload: error };
-};
-export const loadPostSuccess = (post) => {
-  return { type: POSTS_LOAD_POST_SUCCESS, payload: post };
+export const loadUserPostsSuccess = (userPosts) => {
+  return { type: POSTS_LOAD_USER_POSTS_SUCCESS, payload: userPosts };
 };

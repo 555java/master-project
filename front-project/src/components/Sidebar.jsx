@@ -6,7 +6,8 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import React, { Fragment } from "react";
 
 const SidebarList = ({ isLogged }) => {
   return (
@@ -18,11 +19,18 @@ const SidebarList = ({ isLogged }) => {
     >
       <List>
         {isLogged ? (
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="User logged in" />
-            </ListItemButton>
-          </ListItem>
+          <Fragment>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="User logged in" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={RouterLink} to="explore">
+                <ListItemText primary="Explore all users" />
+              </ListItemButton>
+            </ListItem>
+          </Fragment>
         ) : (
           <></>
         )}

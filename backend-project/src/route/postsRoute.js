@@ -29,6 +29,7 @@ const upload = multer({
 });
 
 const Post = require("../models/postModel");
+const User = require("../models/userModel");
 
 router.post(
   "/posts/new",
@@ -42,12 +43,15 @@ router.post(
       title: req.body.title,
       description: req.body.description,
       authorId: req.body.authorId,
+      authorUsername: req.body.authorUsername,
       image: imageNames,
     });
 
     try {
       await newPost.save();
-
+      const user = await User.findById(req.body.authorId);
+      user.posts.push(newPost._id);
+      await user.save();
       res.status(200).send({ newPost });
     } catch (err) {
       next({
@@ -60,13 +64,28 @@ router.post(
 
 router.get("/posts/:postId", async function (req, res, next) {
   try {
-    console.log(req.params.postId);
     const post = await Post.findById(req.params.postId);
     if (post) {
       return res.send({ success: true, post: post });
     } else {
       throw new Error("Failed to find the post");
     }
+  } catch (err) {
+    next({
+      status: 400,
+      message: err?.message || "Failed to find the post",
+    });
+  }
+});
+
+router.get("/posts/user/:userId", async function (req, res, next) {
+  try {
+    let user = await User.findById(req.params.userId);
+    if (!user) {
+      throw new Error("Sorry, something went wrong loading user posts");
+    }
+    await user.populate("posts");
+    return res.send({ success: true, user });
   } catch (err) {
     next(err);
   }

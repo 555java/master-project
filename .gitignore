@@ -4,7 +4,7 @@
 node_modules
 /.pnp
 .pnp.js
-static
+image-uploads
 
 # testing
 /coverage

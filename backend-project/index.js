@@ -59,6 +59,7 @@ app.use(
   "/images",
   express.static(path.join(__dirname, "/static/image-uploads"))
 );
+app.use("/assets", express.static(path.join(__dirname, "/static/assets")));
 
 const port = 8080;
 

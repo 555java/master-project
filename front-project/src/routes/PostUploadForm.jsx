@@ -8,16 +8,18 @@ import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "../components/TextFieldAdapter";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, AlertTitle, Typography } from "@mui/material";
-import { addPostThunk } from "../features-store/posts/posts.thunks";
-import { getUserId } from "../features-store/auth/auth.selectors";
+import { addPostThunk } from "../features-store/post/post.thunks";
+import { getUserId, getUserName } from "../features-store/auth/auth.selectors";
 import { FileField } from "../components/FileFieldAdapter";
-import { getIsPostLoading } from "../features-store/posts/posts.selectors";
+import { getIsPostUploading } from "../features-store/post/post.selectors";
 
 export default function PostUploadForm() {
-  const isPostLoading = useSelector(getIsPostLoading);
+  const isPostUploading = useSelector(getIsPostUploading);
   const authorId = useSelector(getUserId);
+  const authorUsername = useSelector(getUserName);
   const dispatch = useDispatch();
-  const isDisabled = !authorId || isPostLoading;
+  const isDisabled = !authorId || isPostUploading;
+
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 8 }}>
       <Form
@@ -29,12 +31,16 @@ export default function PostUploadForm() {
           if (!values.title) {
             errors.title = "Please, fill the title!";
           }
+          if (!values.imageFiles) {
+            errors.description = "Please, upload the images";
+          }
           if (Object.keys(errors).length) {
             return errors;
           }
           return dispatch(
             addPostThunk({
               authorId: authorId,
+              authorUsername: authorUsername,
               description: values.description,
               title: values.title,
               images: values.imageFiles,
