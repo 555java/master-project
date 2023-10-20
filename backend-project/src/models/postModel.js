@@ -13,17 +13,12 @@ const PostSchema = new Schema({
   title: { type: String },
   description: { type: String },
   image: [ImageSchema],
-  authorId: { type: String, required: true },
+  authorUsername: { type: String },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
 });
-
-PostSchema.methods.toJSON = function () {
-  return {
-    _id: this._id,
-    description: this.description,
-    authorId: this.authorId,
-    image: this.image,
-    title: this.title,
-  };
-};
 
 module.exports = mongoose.model("Post", PostSchema);

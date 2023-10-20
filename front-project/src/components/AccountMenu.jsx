@@ -4,6 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -11,8 +12,10 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import { nameToColor } from "../utils/getRandomAccountColor";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserName } from "../features-store/auth/auth.selectors";
+import { getUserId, getUserName } from "../features-store/auth/auth.selectors";
 import { logoutUserThunk } from "../features-store/auth/auth.thunks";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@mui/material";
 
 export default function AccountMenu() {
   const dispatch = useDispatch();
@@ -26,9 +29,20 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
   const avatarColor = nameToColor(userName);
+  const userId = useSelector(getUserId);
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        <Link href="/posts/new">
+          <Tooltip title="Create new post">
+            <IconButton>
+              <AddCircleOutlineIcon
+                sx={{ fontSize: 30 }}
+                color="accent1"
+              ></AddCircleOutlineIcon>
+            </IconButton>
+          </Tooltip>
+        </Link>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -79,9 +93,17 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
+        <Link
+          component={RouterLink}
+          to={`/posts/user/${userId}`}
+          variant="inherit"
+          underline="none"
+          color="inherit"
+        >
+          <MenuItem>
+            <Avatar /> Profile
+          </MenuItem>
+        </Link>
         <MenuItem>
           <Avatar /> My account
         </MenuItem>

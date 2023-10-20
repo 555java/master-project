@@ -9,13 +9,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { SideBar } from "./Sidebar";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { getIsLoggedIn } from "../features-store/auth/auth.selectors";
+import {
+  getIsLoggedIn,
+  getLogoutError,
+} from "../features-store/auth/auth.selectors";
 import { Fragment } from "react";
-import { Link } from "@mui/material";
+import { Alert, Link } from "@mui/material";
 import AccountMenu from "./AccountMenu";
 
 export default function Header() {
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const logoutError = useSelector(getLogoutError);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <Box>
@@ -48,7 +52,7 @@ export default function Header() {
               color: "white",
               fontWeight: 400,
             }}
-            to="/"
+            to="/about"
           >
             FakeApp
           </Link>
@@ -78,6 +82,7 @@ export default function Header() {
           )}
         </Toolbar>
       </AppBar>
+      {logoutError ? <Alert severity="error">Logout error</Alert> : <></>}
     </Box>
   );
 }

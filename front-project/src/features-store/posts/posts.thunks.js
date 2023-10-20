@@ -1,18 +1,20 @@
-import { FORM_ERROR } from "final-form";
 import { postsApi } from "../../api/posts.api";
-import { addPostStart, addPostSuccess } from "./posts.action";
+import {
+  loadUserPostsError,
+  loadUserPostsStart,
+  loadUserPostsSuccess,
+} from "./posts.action";
 
-export const addPostThunk = ({ authorId, description, title, images }) => {
+export const loadUserPostsThunk = (userId) => {
   return async function (dispatch) {
-    dispatch(addPostStart());
-    return postsApi
-      .addPost({ authorId, description, title, images })
+    dispatch(loadUserPostsStart());
+    postsApi
+      .loadUserPosts(userId)
       .then((res) => {
-        console.log(res);
-        return dispatch(addPostSuccess(res.newPost));
+        dispatch(loadUserPostsSuccess(res.user));
       })
       .catch((err) => {
-        return { [FORM_ERROR]: err?.response?.message || "Post error" };
+        dispatch(loadUserPostsError(err));
       });
   };
 };
