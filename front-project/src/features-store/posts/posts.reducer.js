@@ -5,17 +5,17 @@ import {
 
 const initialState = {
   posts: [],
-  isLoading: false,
+  isPostLoading: false,
 };
 export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POSTS_ADD_POST_START:
-      return { ...state, isLoading: true };
+      return { ...state, isPostLoading: true };
     case POSTS_ADD_POST_SUCCESS:
       return {
         ...state,
         posts: state.posts.concat(action.payload),
-        isLoading: false,
+        isPostLoading: false,
       };
     default:
       return state;

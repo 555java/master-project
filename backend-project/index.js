@@ -14,6 +14,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const userRoute = require("./src/route/userRoute");
 const postsRoute = require("./src/route/postsRoute");
 const cors = require("cors");
+const path = require("path");
 
 mongoose.connect("mongodb://localhost:27017/backend-project");
 const db = mongoose.connection;
@@ -53,6 +54,11 @@ passport.deserializeUser(User.deserializeUser());
 passport.use(new LocalStrategy(User.authenticate()));
 app.use("/", userRoute);
 app.use("/", postsRoute);
+
+app.use(
+  "/images",
+  express.static(path.join(__dirname, "/static/image-uploads"))
+);
 
 const port = 8080;
 

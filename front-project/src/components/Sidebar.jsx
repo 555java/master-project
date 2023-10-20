@@ -4,16 +4,11 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
-import React, { Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { logoutUserThunk } from "../features-store/auth/auth.thunks";
+import React from "react";
 
 const SidebarList = ({ isLogged }) => {
-  const dispatch = useDispatch();
   return (
     <Box
       sx={{
@@ -25,13 +20,7 @@ const SidebarList = ({ isLogged }) => {
         {isLogged ? (
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText
-                onClick={() => dispatch(logoutUserThunk())}
-                primary="Logout"
-              />
+              <ListItemText primary="User logged in" />
             </ListItemButton>
           </ListItem>
         ) : (

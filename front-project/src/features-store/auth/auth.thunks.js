@@ -9,7 +9,7 @@ import {
 import { FORM_ERROR } from "final-form";
 
 export const signUpUserThunk = ({ username, email, password }) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     return authApi
       .signUp({ username, email, password })
       .then((res) => dispatch(setUser(res.data.user)))
@@ -20,7 +20,7 @@ export const signUpUserThunk = ({ username, email, password }) => {
 };
 
 export const signInUserThunk = ({ username, password }) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     return authApi
       .signIn({ username, password })
       .then((res) => dispatch(setUser(res.data.user)))
@@ -31,7 +31,7 @@ export const signInUserThunk = ({ username, password }) => {
 };
 
 export const getUserThunk = () => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     dispatch(loadUserStart());
     return authApi
       .loadUser()
@@ -43,7 +43,7 @@ export const getUserThunk = () => {
 };
 
 export const logoutUserThunk = () => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     dispatch(logoutUserStart());
     return authApi
       .logOut()
