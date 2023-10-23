@@ -35,6 +35,7 @@ router.post(
   "/posts/new",
   upload.array("images", 5),
   async function (req, res, next) {
+    console.log(req.body);
     const imageNames = req.files.map((file) => {
       return { filename: file.filename };
     });

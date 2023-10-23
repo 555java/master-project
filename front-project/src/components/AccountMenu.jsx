@@ -33,7 +33,7 @@ export default function AccountMenu() {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Link href="/posts/new">
+        <Link component={RouterLink} to="/posts/new">
           <Tooltip title="Create new post">
             <IconButton>
               <AddCircleOutlineIcon
