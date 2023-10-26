@@ -1,112 +1,67 @@
-// Custom API error to throw
-function ApiError(message, data, status) {
-  let response = null;
-  let isObject = false;
+import { isIterableObject } from "./isIterableObject";
 
-  // We are trying to parse response
-  try {
-    response = JSON.parse(data);
-    isObject = true;
-  } catch (e) {
-    response = data;
+async function fetchDB(endpoint, method = "GET", body = null, headers = {}) {
+  const apiUrl = "http://localhost:3000/api";
+  const url = `${apiUrl}/${endpoint}`;
+
+  const hasFile =
+    body &&
+    Object.values(body).some(
+      (val) =>
+        val instanceof File ||
+        (isIterableObject(val) &&
+          Array.from(val).some((item) => item instanceof File))
+    );
+
+  if (!hasFile) {
+    headers["Content-Type"] = "application/json";
   }
-
-  this.response = response;
-  this.message = message;
-  this.status = status;
-  this.toString = function () {
-    return `${this.message}\nResponse:\n${
-      isObject ? JSON.stringify(this.response, null, 2) : this.response
-    }`;
-  };
-}
-
-// API wrapper function
-const fetchDB = (path, userOptions = {}) => {
-  // Define default options
-  const defaultOptions = {};
-  // Define default headers
-  const defaultHeaders = {};
 
   const options = {
-    // Merge options
-    ...defaultOptions,
-    ...userOptions,
-    // Merge headers
-    headers: {
-      ...defaultHeaders,
-      ...userOptions.headers,
-    },
+    method,
+    headers,
+    credentials: "include",
   };
 
-  // Build Url
-  const url = `http://localhost:8080/${path}`;
-
-  // Detect is we are uploading a file
-  const isFile = options.body instanceof File;
-  const isFormData = options.body instanceof FormData;
-
-  // Stringify JSON data
-  // If body is not a file
-  if (
-    options.body &&
-    typeof options.body === "object" &&
-    !isFile &&
-    !isFormData
-  ) {
-    options.body = JSON.stringify(options.body);
+  if (body) {
+    if (hasFile) {
+      const formData = new FormData();
+      Object.keys(body).forEach((key) => {
+        const value = body[key];
+        if (isIterableObject(value)) {
+          Array.from(value).forEach((item, index) => {
+            formData.append(key, item);
+          });
+        } else {
+          formData.append(key, value);
+        }
+      });
+      options.body = formData;
+    } else {
+      options.body = JSON.stringify(body);
+    }
   }
 
-  // Variable which will be used for storing response
-  let response = null;
-  return (
-    fetch(url, options)
-      .then((responseObject) => {
-        // Saving response for later use in lower scopes
-        response = responseObject;
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      const text = await response.text();
+      let details;
 
-        // HTTP unauthorized
-        if (response.status === 401) {
-          // Handle unauthorized requests
-          // Maybe redirect to login page?
-          console.log("error 401");
-        }
+      try {
+        details = JSON.parse(text);
+      } catch (e) {
+        details = { message: text };
+      }
 
-        // Check for error HTTP error codes
-        if (response.status < 200 || response.status >= 300) {
-          // Get response as text
-          return response.text();
-        }
+      throw new Error(details?.message || "Unexpected API error");
+    }
 
-        // Get response as json
-        return response.json();
-      })
-      // "parsedResponse" will be either text or javascript object depending if
-      // "response.text()" or "response.json()" got called in the upper scope
-      .then((parsedResponse) => {
-        // Check for HTTP error codes
-        if (response.status < 200 || response.status >= 300) {
-          // Throw error
-          throw parsedResponse;
-        }
-
-        // Request succeeded
-        return parsedResponse;
-      })
-      .catch((error) => {
-        // Throw custom API error
-        // If response exists it means HTTP error occured
-        if (response) {
-          throw new ApiError(
-            `Request failed from Api.js with status ${response.status}.`,
-            error,
-            response.status
-          );
-        } else {
-          throw new ApiError(error.toString(), null, "REQUEST_FAILED");
-        }
-      })
-  );
-};
-
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API request failed:", error);
+    throw error;
+  }
+}
 export default fetchDB;

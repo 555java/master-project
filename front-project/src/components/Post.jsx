@@ -73,7 +73,7 @@ export const Post = ({ post }) => {
 
           <CardMedia
             component="img"
-            image={post.image[imageCount].filename}
+            image={post.image[imageCount].url}
             sx={{
               height: "450px",
               maxWidth: "100vw",
@@ -81,7 +81,7 @@ export const Post = ({ post }) => {
               objectFit: "contain",
               backgroundColor: "#EEEEEE",
             }}
-            alt="Paella dish"
+            alt={post.title}
           />
         </Grid>
 

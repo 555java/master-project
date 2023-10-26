@@ -2,94 +2,41 @@ import fetchDB from "../utils/api";
 
 export const authApi = {
   signIn({ username, password }) {
-    return fetchDB("login", {
-      method: "POST",
-      body: {
-        username,
-        password,
-      },
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
+    return fetchDB("login", "POST", {
+      username,
+      password,
     });
   },
 
   signUp({ username, email, password }) {
-    return fetchDB("register", {
-      method: "POST",
-      body: {
-        username: username,
-        email: email,
-        password: password,
-      },
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
+    return fetchDB("register", "POST", {
+      username: username,
+      email: email,
+      password: password,
     });
   },
 
   loadUser() {
-    return fetchDB("user", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    return fetchDB("user", "GET");
   },
 
   logOut() {
-    return fetchDB("logout", {
-      method: "POST",
-      body: {},
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    return fetchDB("logout", "POST", {});
   },
   subscribe(authUserId, userId) {
-    return fetchDB(`posts/user/${userId}/subscribe`, {
-      method: "POST",
-      body: {
-        authUserId: authUserId,
-      },
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
+    return fetchDB(`posts/user/${userId}/subscribe`, "POST", {
+      authUserId: authUserId,
     });
   },
   unsubscribe(authUserId, userId) {
-    return fetchDB(`posts/user/${userId}/unsubscribe`, {
-      method: "POST",
-      body: {
-        authUserId: authUserId,
-      },
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
+    return fetchDB(`posts/user/${userId}/unsubscribe`, "POST", {
+      authUserId: authUserId,
     });
   },
   loadUserSubscriptions(userId) {
-    return fetchDB(`user/${userId}/subscriptions`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    return fetchDB(`user/${userId}/subscriptions`, "GET");
   },
   loadAllUsers() {
-    return fetchDB("explore", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    return fetchDB("explore", "GET");
   },
 };

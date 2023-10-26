@@ -16,7 +16,7 @@ export const AboutPage = () => {
       <Grid lg={12} md={12} xs={12}>
         <Box
           component="img"
-          src="http://localhost:8080/assets/mainphoto.jpeg"
+          src="https://res.cloudinary.com/rocloud/image/upload/v1698251411/mainphoto.jpg"
           sx={{
             width: "100%",
             objectFit: "cover",
@@ -25,7 +25,7 @@ export const AboutPage = () => {
             padding: "0",
             maxHeight: "600px",
           }}
-          alt="Paella dish"
+          alt="photo of sunset with camera view"
         />
       </Grid>
       <Grid

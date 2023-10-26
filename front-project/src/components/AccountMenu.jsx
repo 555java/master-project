@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import GroupsIcon from "@mui/icons-material/Groups";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -33,7 +34,7 @@ export default function AccountMenu() {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Link href="/posts/new">
+        <Link component={RouterLink} to="/posts/new">
           <Tooltip title="Create new post">
             <IconButton>
               <AddCircleOutlineIcon
@@ -104,15 +105,27 @@ export default function AccountMenu() {
             <Avatar /> Profile
           </MenuItem>
         </Link>
-        <MenuItem>
-          <Avatar /> My account
-        </MenuItem>
+        <Link
+          component={RouterLink}
+          to={`/user/${userId}/subscriptions`}
+          variant="inherit"
+          underline="none"
+          color="inherit"
+        >
+          <MenuItem>
+            <ListItemIcon>
+              <GroupsIcon />
+            </ListItemIcon>
+            My subscriptions
+          </MenuItem>
+        </Link>
         <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
+
         <Divider />
         <MenuItem onClick={() => dispatch(logoutUserThunk())}>
           <ListItemIcon>

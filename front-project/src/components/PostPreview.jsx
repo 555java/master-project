@@ -27,13 +27,13 @@ export const PostPreview = ({ post }) => {
       <Grid sx={{ display: "flex", flexDirection: "row" }}>
         <CardMedia
           component="img"
-          image={post.image[0].filename}
+          image={post.image[0].url}
           sx={{
             maxWidth: "100vw",
             width: "100%",
             objectFit: "contain",
           }}
-          alt="Paella dish"
+          alt="post preview"
         />
       </Grid>
 

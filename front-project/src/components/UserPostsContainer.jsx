@@ -41,8 +41,8 @@ export const UserPostsContainer = ({ posts }) => {
           >
             <CardMedia
               component="img"
-              src={`${post.image[0].filename}?w=248&fit=crop&auto=format`}
-              srcSet={`${post.image[0].filename}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${post.image[0].url}?w=248&fit=crop&auto=format`}
+              srcSet={`${post.image[0].url}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={post.title}
               loading="lazy"
             />
