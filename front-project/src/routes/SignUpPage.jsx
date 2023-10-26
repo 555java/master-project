@@ -1,4 +1,4 @@
-import SignUpForm from "../components/SignUpForm";
+import { SignUpForm } from "../components/SignUpForm";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../features-store/auth/auth.selectors";
