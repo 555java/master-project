@@ -26,7 +26,9 @@ export const addPostThunk = ({
       })
       .catch((err) => {
         dispatch(addPostError());
-        return { [FORM_ERROR]: err?.response?.message || "Post error" };
+        return {
+          [FORM_ERROR]: err?.message ?? "Post error",
+        };
       });
   };
 };

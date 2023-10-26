@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: "../.env" });
+}
 const express = require("express");
 const app = express();
 const User = require("./src/models/userModel");
@@ -15,8 +18,11 @@ const userRoute = require("./src/route/userRoute");
 const postsRoute = require("./src/route/postsRoute");
 const cors = require("cors");
 const path = require("path");
+const dbUrl = process.env.DB_URL;
+// "mongodb://localhost:27017/backend-project"
 
-mongoose.connect("mongodb://localhost:27017/backend-project");
+mongoose.connect(dbUrl);
+
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -39,7 +45,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: "mongodb://localhost:27017/backend-project",
+      mongoUrl: dbUrl,
       ttl: 14 * 24 * 60 * 60,
     }),
   })
@@ -52,20 +58,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 passport.use(new LocalStrategy(User.authenticate()));
-app.use("/", userRoute);
-app.use("/", postsRoute);
-
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "/static/image-uploads"))
-);
-app.use("/assets", express.static(path.join(__dirname, "/static/assets")));
+app.use("/api", userRoute);
+app.use("/api", postsRoute);
 
 const port = 8080;
-
-app.get("/", (req, res) => {
-  res.send("Hello Backend");
-});
 
 app.use((err, req, res, next) => {
   const status = err?.status || 500;

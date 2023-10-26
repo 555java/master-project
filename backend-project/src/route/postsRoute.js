@@ -1,20 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "static/image-uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e4);
-    const ext = file.mimetype.split("/")[1];
-    cb(null, uniqueSuffix + "." + ext);
-  },
-});
+const { imageStorage } = require("../../cloudinary/index.js");
 
 const upload = multer({
-  storage: storage,
+  storage: imageStorage,
+  limits: { fileSize: 5000000 },
   fileFilter: async (req, file, cb) => {
     const isImageMimetype =
       file.mimetype === "image/png" ||
@@ -35,20 +26,19 @@ router.post(
   "/posts/new",
   upload.array("images", 5),
   async function (req, res, next) {
-    console.log(req.body);
-    const imageNames = req.files.map((file) => {
-      return { filename: file.filename };
-    });
-
-    const newPost = new Post({
-      title: req.body.title,
-      description: req.body.description,
-      authorId: req.body.authorId,
-      authorUsername: req.body.authorUsername,
-      image: imageNames,
-    });
-
     try {
+      const images = req.files.map((file) => {
+        return { filename: file.filename, url: file.path };
+      });
+
+      const newPost = new Post({
+        title: req.body.title,
+        description: req.body.description,
+        authorId: req.body.authorId,
+        authorUsername: req.body.authorUsername,
+        image: images,
+      });
+
       await newPost.save();
       const user = await User.findById(req.body.authorId);
       user.posts.push(newPost._id);

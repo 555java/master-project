@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.3.1",
     "redux-logger": "^3.0.6"
   }
 }

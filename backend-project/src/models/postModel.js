@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const root = "http://localhost:8080/images/";
 
 const ImageSchema = new Schema(
   {
-    filename: { type: String, get: (v) => `${root}${v}` },
+    url: { type: String },
+    filename: { type: String },
   },
   { toJSON: { getters: true } }
 );
