@@ -19,7 +19,7 @@ const postsRoute = require("./src/route/postsRoute");
 const cors = require("cors");
 const path = require("path");
 const dbUrl = process.env.DB_URL;
-// "mongodb://localhost:27017/backend-project"
+const frontURl = process.env.FRONTEND_URL;
 
 mongoose.connect(dbUrl);
 
@@ -31,7 +31,7 @@ db.once("open", () => {
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: frontURl,
     allowedHeaders: ["content-type"],
     credentials: true,
   })

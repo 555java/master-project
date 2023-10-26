@@ -1,7 +1,7 @@
 import { isIterableObject } from "./isIterableObject";
 
 async function fetchDB(endpoint, method = "GET", body = null, headers = {}) {
-  const apiUrl = "http://localhost:3000/api";
+  const apiUrl = "/api";
   const url = `${apiUrl}/${endpoint}`;
 
   const hasFile =
