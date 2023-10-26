@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { signUpUserThunk } from "../features-store/auth/auth.thunks";
 import { Alert } from "@mui/material";
 
-export default function SignUpForm({ toggleFormType }) {
+export default function SignUpForm() {
   const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
