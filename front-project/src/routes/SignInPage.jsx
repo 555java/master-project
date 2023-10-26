@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { SignInForm } from "../components/SignInForm";
+import { SignInForm } from "../components/signInForm";
 import { getIsLoggedIn } from "../features-store/auth/auth.selectors";
 import React from "react";
 
