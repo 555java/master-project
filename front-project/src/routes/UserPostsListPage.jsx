@@ -14,10 +14,7 @@ import {
 import { UserHeader } from "../components/UserHeader";
 import Grid from "@mui/material/Unstable_Grid2";
 import { UserPostsContainer } from "../components/UserPostsContainer";
-import {
-  getIsLoggedIn,
-  getUserId,
-} from "../features-store/auth/auth.selectors";
+import { getIsLoggedIn } from "../features-store/auth/auth.selectors";
 
 export const UserPostsListPage = () => {
   const dispatch = useDispatch();
