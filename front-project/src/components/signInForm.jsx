@@ -16,7 +16,7 @@ import { signInUserThunk } from "../features-store/auth/auth.thunks";
 import { useDispatch } from "react-redux";
 import { Alert } from "@mui/material";
 
-export default function SignInForm() {
+export const SignInForm = () => {
   const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
@@ -126,4 +126,4 @@ export default function SignInForm() {
       </Box>
     </Container>
   );
-}
+};

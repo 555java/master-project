@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { signUpUserThunk } from "../features-store/auth/auth.thunks";
 import { Alert } from "@mui/material";
 
-export default function SignUpForm() {
+export const SignUpForm = () => {
   const dispatch = useDispatch();
   return (
     <Container component="main" maxWidth="xs">
@@ -147,4 +147,4 @@ export default function SignUpForm() {
       </Box>
     </Container>
   );
-}
+};
