@@ -1,4 +1,5 @@
 # Welcome to "FakeApp" - Your Simple Social Photo App
+### https://fake-app-2mlz.onrender.com
 
 <img width="356" align="right" alt="image" src="https://github.com/555java/master-project/assets/60987187/eb5c7c6c-35bf-4535-bc6d-cdffca2b08cb">
 
@@ -35,8 +36,11 @@ Your feedback is invaluable in helping us improve SnapShare. If you have any sug
 
 ## Poducing
 <img width="600" align="left" alt="image" src="https://github.com/555java/master-project/assets/60987187/0db0131d-8cd3-43c3-9fbe-b23d94bd2b17">
+
 This project was realized under the supervision of experienced front-end developer, simulating the real-life experience, task were planned with trello, after the tasks were done, code revie was asked with git functionality.
-This app is curently fully working on render.
+This app is curently fully working on **RENDER**.
+
+
 
 
 
