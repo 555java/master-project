@@ -36,7 +36,7 @@ Your feedback is invaluable in helping us improve SnapShare. If you have any sug
 ## Poducing
 <img width="600" align="left" alt="image" src="https://github.com/555java/master-project/assets/60987187/0db0131d-8cd3-43c3-9fbe-b23d94bd2b17">
 This project was realized under the supervision of experienced front-end developer, simulating the real-life experience, task were planned with trello, after the tasks were done, code revie was asked with git functionality.
-This app is curently fully working on **RENDER**
+This app is curently fully working on render.
 
 
 
