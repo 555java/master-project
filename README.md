@@ -50,39 +50,16 @@ Working for this project was enjoing, because i got to know a lot of useful pack
 ](https://www.npmjs.com/package/passport)
 
 ## Poducing
-<img width="50%" align="left" alt="image" src="https://github.com/555java/master-project/assets/60987187/0db0131d-8cd3-43c3-9fbe-b23d94bd2b17">
 This project was realized under the supervision of experienced front-end developer, simulating the real-life experience, task were planned with trello, after the tasks were done, code revie was asked with git functionality.
 This app is curently fully working on **RENDER**.
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+<br/><br/>
+<img width="500" alt="image" src="https://github.com/555java/master-project/assets/60987187/0db0131d-8cd3-43c3-9fbe-b23d94bd2b17">
 
 ## Technologies
-Here i decided to used the [MongoAtlas](https://www.mongodb.com/atlas/database) as a storage of users data, and a [cloudinary service](https://www.cloudinary.com) for saving the users uploaded pictures
-<br/>
-<br/>
-<img  width="45%" align="left" alt="image" src="https://github.com/555java/master-project/assets/60987187/91c76649-2075-45ef-bdb1-7dfd135ae884">
-<br/>
-<img  width="45%" align="right" alt="image" src="https://github.com/555java/master-project/assets/60987187/2883ca50-48ac-4882-a40b-e04bcbae16d1">
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+Here i decided to used the [MongoAtlas](https://www.mongodb.com/atlas/database) as a storage of users data, and a [cloudinary service](https://www.cloudinary.com) for saving the users uploaded pictures.
+<br/><br/>
+<img  width="500"  alt="image" src="https://github.com/555java/master-project/assets/60987187/91c76649-2075-45ef-bdb1-7dfd135ae884">
+<img   width="500" alt="image" src="https://github.com/555java/master-project/assets/60987187/2883ca50-48ac-4882-a40b-e04bcbae16d1">
 
 ## Documentation
 
