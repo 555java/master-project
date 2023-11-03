@@ -70,12 +70,12 @@ This project was realized under the supervision of experienced front-end develop
 
 ## Code
 
-For more information and to get a better understanding of how SnapShare works, please refer to our comprehensive [gitHub project](https://github.com/555java/master-project) in the repository.
+For more information and to get a better understanding of how this app work, check the [gitHub project](https://github.com/555java/master-project).
 
 
 ## Feedback
 
-Your feedback is invaluable in helping us improve SnapShare. If you have any suggestions or encounter any issues, please feel free to [message me in LinkedIn](https://www.linkedin.com/in/inessarotnova/).
+Your feedback is invaluable [message me in LinkedIn](https://www.linkedin.com/in/inessarotnova/).
 
 
 
