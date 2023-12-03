@@ -23,15 +23,11 @@ export const authApi = {
   logOut() {
     return fetchDB("logout", "POST", {});
   },
-  subscribe(authUserId, userId) {
-    return fetchDB(`posts/user/${userId}/subscribe`, "POST", {
-      authUserId: authUserId,
-    });
+  subscribe(userId) {
+    return fetchDB(`posts/user/${userId}/subscribe`, "POST", {});
   },
-  unsubscribe(authUserId, userId) {
-    return fetchDB(`posts/user/${userId}/unsubscribe`, "POST", {
-      authUserId: authUserId,
-    });
+  unsubscribe(userId) {
+    return fetchDB(`posts/user/${userId}/unsubscribe`, "POST", {});
   },
   loadUserSubscriptions(userId) {
     return fetchDB(`user/${userId}/subscriptions`, "GET");

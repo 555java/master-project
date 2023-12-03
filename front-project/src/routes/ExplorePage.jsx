@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsersThunk } from "../features-store/auth/auth.thunks";
+import { getAllUsersThunk } from "../redux/auth/auth.thunks";
 import {
   getAllUsers,
   getIsAllUsersLoading,
   getUserId,
   getUsersListError,
-} from "../features-store/auth/auth.selectors";
+} from "../redux/auth/auth.selectors";
 import { Alert, Box, Grid, LinearProgress } from "@mui/material";
 import { UsersList } from "../components/UsersList";
 
@@ -27,13 +27,6 @@ export const ExplorePage = () => {
         <LinearProgress color="secondary" />
       </Box>
     );
-  if (!authUserId) {
-    return (
-      <Grid item xs={12}>
-        <Alert severity="error">Authentification failed!</Alert>
-      </Grid>
-    );
-  }
   if (usersListError) {
     return (
       <Grid item xs={12}>

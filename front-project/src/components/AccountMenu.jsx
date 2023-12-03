@@ -10,11 +10,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Settings from "@mui/icons-material/Settings";
+import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { nameToColor } from "../utils/getRandomAccountColor";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserId, getUserName } from "../features-store/auth/auth.selectors";
-import { logoutUserThunk } from "../features-store/auth/auth.thunks";
+import { getUserId, getUserName } from "../redux/auth/auth.selectors";
+import { logoutUserThunk } from "../redux/auth/auth.thunks";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
 
@@ -44,7 +45,7 @@ export default function AccountMenu() {
             </IconButton>
           </Tooltip>
         </Link>
-        <Tooltip title="Account settings">
+        <Tooltip title="My profile">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -102,7 +103,10 @@ export default function AccountMenu() {
           color="inherit"
         >
           <MenuItem>
-            <Avatar /> Profile
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+            Profile
           </MenuItem>
         </Link>
         <Link
@@ -119,14 +123,21 @@ export default function AccountMenu() {
             My subscriptions
           </MenuItem>
         </Link>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-
-        <Divider />
+        <Link
+          component={RouterLink}
+          to={`/posts/user/${userId}`}
+          variant="inherit"
+          underline="none"
+          color="inherit"
+        >
+          <MenuItem>
+            <ListItemIcon>
+              <PhotoLibraryIcon />
+            </ListItemIcon>
+            My posts
+          </MenuItem>
+        </Link>
+        <Divider sx={{ margin: "10px 0 5px" }} />
         <MenuItem onClick={() => dispatch(logoutUserThunk())}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />

@@ -1,9 +1,9 @@
 import { applyMiddleware, combineReducers, createStore, compose } from "redux";
-import { authReducer } from "../features-store/auth/auth.reducer";
+import { authReducer } from "../redux/auth/auth.reducer";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import { postReducer } from "../features-store/post/post.reducer";
-import { postsReducer } from "../features-store/posts/posts.reducer";
+import { postReducer } from "../redux/post/post.reducer";
+import { postsReducer } from "../redux/posts/posts.reducer";
 
 export function createAppStore(router) {
   const composeEnhancers =

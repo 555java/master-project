@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Alert, Box, Grid, LinearProgress } from "@mui/material";
 import { useEffect } from "react";
-import { loadPostThunk } from "../features-store/post/post.thunks";
+import { loadPostThunk } from "../redux/post/post.thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   getIsPostLoading,
   getPostError,
   getUploadedPost,
-} from "../features-store/post/post.selectors";
+} from "../redux/post/post.selectors";
 import { Post } from "../components/Post";
 
 export default function PostPage() {
