@@ -2,7 +2,7 @@ import * as React from "react";
 import { Alert, Box, Container, LinearProgress } from "@mui/material";
 
 import { useEffect } from "react";
-import { loadUserPostsThunk } from "../features-store/posts/posts.thunks";
+import { loadUserPostsThunk } from "../redux/posts/posts.thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -10,11 +10,11 @@ import {
   getBrowsedUserPosts,
   getIsPostsLoading,
   getPostsError,
-} from "../features-store/posts/posts.selectors";
+} from "../redux/posts/posts.selectors";
 import { UserHeader } from "../components/UserHeader";
 import Grid from "@mui/material/Unstable_Grid2";
 import { UserPostsContainer } from "../components/UserPostsContainer";
-import { getIsLoggedIn } from "../features-store/auth/auth.selectors";
+import { getIsLoggedIn } from "../redux/auth/auth.selectors";
 
 export const UserPostsListPage = () => {
   const dispatch = useDispatch();

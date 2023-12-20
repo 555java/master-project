@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { createAppStore } from "./app/store";
+import { createAppStore } from "./redux/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SignInPage } from "./routes/SignInPage";
 import { SignUpPage } from "./routes/SignUpPage";
-import App from "./app/App";
+import App from "./routes/App";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { getUserThunk } from "./features-store/auth/auth.thunks";
+import { getUserThunk } from "./redux/auth/auth.thunks";
 import CssBaseline from "@mui/material/CssBaseline";
 import PostUploadForm from "./routes/PostUploadForm";
 import PostPage from "./routes/PostPage";
@@ -61,12 +61,12 @@ store.dispatch(getUserThunk());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </Provider>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>
 );

@@ -12,12 +12,14 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
-import { signInUserThunk } from "../features-store/auth/auth.thunks";
-import { useDispatch } from "react-redux";
+import { signInUserThunk } from "../redux/auth/auth.thunks";
+import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "@mui/material";
+import { getIsUserSetting } from "../redux/auth/auth.selectors";
 
 export const SignInForm = () => {
   const dispatch = useDispatch();
+  const isUserSetting = useSelector(getIsUserSetting);
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -72,6 +74,7 @@ export const SignInForm = () => {
                     name="username"
                     autoComplete="username"
                     autoFocus
+                    disabled={isUserSetting}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -83,6 +86,7 @@ export const SignInForm = () => {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    disabled={isUserSetting}
                   />
                 </Grid>
                 {submitError && (
@@ -91,15 +95,12 @@ export const SignInForm = () => {
                   </Grid>
                 )}
               </Grid>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isUserSetting}
               >
                 Sign In
               </Button>

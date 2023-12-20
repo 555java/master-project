@@ -16,13 +16,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getIsSubscribed,
+  getIsSubscribing,
   getUser,
-  getUserId,
-} from "../features-store/auth/auth.selectors";
-import {
-  userSubscribe,
-  userUnsubscribe,
-} from "../features-store/auth/auth.thunks";
+} from "../redux/auth/auth.selectors";
+import { userSubscribe, userUnsubscribe } from "../redux/auth/auth.thunks";
 import { useState } from "react";
 
 export const UserHeader = ({ user }) => {
@@ -31,8 +28,8 @@ export const UserHeader = ({ user }) => {
   const userId = user._id;
   const avatarColor = nameToColor(username);
   const authUser = useSelector(getUser);
-  const authUserId = useSelector(getUserId);
   const isSubscribed = useSelector((state) => getIsSubscribed(state, userId));
+  const isSubscribing = useSelector(getIsSubscribing);
   const [openDialog, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -98,7 +95,11 @@ export const UserHeader = ({ user }) => {
           ) : isSubscribed ? (
             <Box>
               <Tooltip title="Press to unsubscribe">
-                <Button variant="outlined" onClick={handleClickOpen}>
+                <Button
+                  variant="outlined"
+                  disabled={isSubscribing}
+                  onClick={handleClickOpen}
+                >
                   Subscribed
                 </Button>
               </Tooltip>
@@ -124,7 +125,7 @@ export const UserHeader = ({ user }) => {
                   <Button
                     onClick={() => {
                       handleClose();
-                      dispatch(userUnsubscribe(authUserId, userId));
+                      dispatch(userUnsubscribe(userId));
                     }}
                   >
                     Unsubscribe
@@ -135,7 +136,8 @@ export const UserHeader = ({ user }) => {
           ) : (
             <Button
               variant="contained"
-              onClick={() => dispatch(userSubscribe(authUserId, userId))}
+              onClick={() => dispatch(userSubscribe(userId))}
+              disabled={isSubscribing}
             >
               Subscribe
             </Button>

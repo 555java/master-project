@@ -15,6 +15,15 @@ router.post("/register", function (req, res, next) {
     req.body.password,
     function (err, user) {
       if (err) {
+        if (
+          err.message &&
+          err.message.indexOf("E11000 duplicate key error collection") !== -1
+        ) {
+          return next({
+            status: 400,
+            message: "Use another username or email",
+          });
+        }
         return next({
           status: 400,
           message: "Your account could not be saved. Error: " + err.message,
@@ -92,7 +101,7 @@ router.post("/logout", function (req, res, next) {
 
 router.post("/posts/user/:userId/subscribe", async function (req, res, next) {
   try {
-    const user = await User.findById(req.body.authUserId);
+    const user = await User.findById(req.user._id);
     user.subscriptions.push(mongoose.Types.ObjectId(req.params.userId));
     await user.save();
     res.status(200).send({ user });
@@ -106,7 +115,7 @@ router.post("/posts/user/:userId/subscribe", async function (req, res, next) {
 
 router.post("/posts/user/:userId/unsubscribe", async function (req, res, next) {
   try {
-    const user = await User.findById(req.body.authUserId);
+    const user = await User.findById(req.user._id);
     const unsubscribeId = mongoose.Types.ObjectId(req.params.userId);
     const index = user.subscriptions.indexOf(unsubscribeId);
     if (index < 0) {
@@ -128,12 +137,26 @@ router.post("/posts/user/:userId/unsubscribe", async function (req, res, next) {
 
 router.get("/user/:userId/subscriptions", async function (req, res, next) {
   try {
+    if (req.user._id != req.params.userId) {
+      throw new Error("Authentication failed");
+    }
     let user = await User.findById(req.params.userId);
     if (!user) {
       throw new Error("Sorry, something went wrong loading user posts");
     }
-    await user.populate("subscriptions", "username");
-    return res.send({ success: true, user });
+    await user.populate("subscriptions", "username posts");
+    let subscriptions = user.subscriptions.map((user) => {
+      return {
+        username: user.username,
+        _id: user._id,
+        postsLength: user.posts.length,
+      };
+    });
+
+    return res.send({
+      success: true,
+      subscriptions,
+    });
   } catch (err) {
     next({
       status: 400,
@@ -145,7 +168,14 @@ router.get("/user/:userId/subscriptions", async function (req, res, next) {
 
 router.get("/explore", async function (req, res, next) {
   try {
-    let users = User.find({}, "username", function (err, data) {
+    let users = User.find({}, "username posts", function (err, data) {
+      data = data.map((el) => {
+        return {
+          username: el.username,
+          postsLength: el.posts.length,
+          _id: el._id,
+        };
+      });
       res.json(data);
     });
   } catch (err) {

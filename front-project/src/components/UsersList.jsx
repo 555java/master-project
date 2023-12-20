@@ -45,16 +45,30 @@ export const UsersList = ({ usersList }) => {
               variant="contained"
               color="accent1"
             >
-              <Avatar
+              <Grid
+                container
                 sx={{
-                  bgcolor: nameToColor(user.username),
-                  width: 32,
-                  height: 32,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                {user.username.slice(0, 1).toUpperCase()}
-              </Avatar>
-              <Typography variant="h7">{user.username}</Typography>
+                <Avatar
+                  sx={{
+                    bgcolor: nameToColor(user.username),
+                    width: 32,
+                    height: 32,
+                    marginRight: "10px",
+                  }}
+                >
+                  {user.username.slice(0, 1).toUpperCase()}
+                </Avatar>
+                <Typography variant="body2">{user.username}</Typography>
+              </Grid>
+              <Typography variant="overline">
+                {user.postsLength +
+                  (user.postsLength === 1 ? " post" : " posts")}
+              </Typography>
             </Button>
           </Grid>
         ))}

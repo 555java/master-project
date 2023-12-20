@@ -10,12 +10,14 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "./TextFieldAdapter";
-import { useDispatch } from "react-redux";
-import { signUpUserThunk } from "../features-store/auth/auth.thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUserThunk } from "../redux/auth/auth.thunks";
 import { Alert } from "@mui/material";
+import { getIsUserSetting } from "../redux/auth/auth.selectors";
 
 export const SignUpForm = () => {
   const dispatch = useDispatch();
+  const isUserSetting = useSelector(getIsUserSetting);
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -38,11 +40,22 @@ export const SignUpForm = () => {
             if (!values.username) {
               errors.username = "Username required";
             }
+            if (values.username.length > 16) {
+              errors.username = "Please use username under 16 characters";
+            }
             if (!values.email) {
-              errors.email = "email required";
+              errors.email = "Email required";
+            }
+            let mailformat =
+              /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/; // eslint-disable-line
+            if (!values.email.match(mailformat)) {
+              errors.email = "Invalid email";
             }
             if (!values.password) {
               errors.password = "Password required";
+            }
+            if (values.password.length < 4) {
+              errors.password = "Use stronger password";
             }
             if (!values.confirm) {
               errors.confirm = "You should confirm the password";
@@ -80,6 +93,7 @@ export const SignUpForm = () => {
                     fullWidth
                     label="Username"
                     autoFocus
+                    disabled={isUserSetting}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -92,6 +106,7 @@ export const SignUpForm = () => {
                     fullWidth
                     id="email"
                     label="Email Address"
+                    disabled={isUserSetting}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -103,7 +118,7 @@ export const SignUpForm = () => {
                     label="Password"
                     type="password"
                     id="password"
-                    autoComplete="new-password"
+                    disabled={isUserSetting}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -115,7 +130,7 @@ export const SignUpForm = () => {
                     label="Confirm password"
                     type="password"
                     id="confirm"
-                    autoComplete="new-password"
+                    disabled={isUserSetting}
                   />
                 </Grid>
 
@@ -125,12 +140,12 @@ export const SignUpForm = () => {
                   </Grid>
                 )}
               </Grid>
-
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isUserSetting}
               >
                 Sign Up
               </Button>

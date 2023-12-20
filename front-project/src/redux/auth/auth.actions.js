@@ -17,22 +17,34 @@ import {
   AUTH_GET_ALL_USERS_START,
   AUTH_GET_ALL_USERS_SUCCESS,
   AUTH_GET_ALL_USERS_ERROR,
+  AUTH_USER_LOAD_ERROR,
+  AUTH_SET_USER_START,
+  AUTH_SET_USER_SUCCESS,
 } from "./auth.constants";
 
-export const setUser = (user) => {
-  return { type: AUTH_SET_USER, payload: user };
+export const setUserStart = () => {
+  return { type: AUTH_SET_USER_START };
 };
+export const setUserSuccess = (user) => {
+  return { type: AUTH_SET_USER_SUCCESS, payload: user };
+};
+export const setUserError = (err) => {
+  return { type: AUTH_SET_USER_START, payload: err };
+};
+
 export const loadUserStart = () => {
   return { type: AUTH_USER_LOAD_START };
 };
 export const loadUserSuccess = (user) => {
   return { type: AUTH_USER_LOAD_SUCCESS, payload: user };
 };
+export const loadUserError = (err) => {
+  return { type: AUTH_USER_LOAD_ERROR, payload: err };
+};
 
 export const logoutUserStart = () => {
   return { type: AUTH_USER_LOGOUT_START };
 };
-
 export const logoutUserSuccess = () => {
   return { type: AUTH_USER_LOGOUT_SUCCESS };
 };
@@ -63,9 +75,8 @@ export const unsubscribeError = () => {
 export const getSubscriptionsStart = () => {
   return { type: AUTH_GET_SUBSCRIPTIONS_START };
 };
-
-export const getSubscriptionsSucess = (user) => {
-  return { type: AUTH_GET_SUBSCRIPTIONS_SUCCESS, payload: user };
+export const getSubscriptionsSucess = (subscribtions) => {
+  return { type: AUTH_GET_SUBSCRIPTIONS_SUCCESS, payload: subscribtions };
 };
 export const getSubscriptionsError = (err) => {
   return { type: AUTH_GET_SUBSCRIPTIONS_ERROR, payload: err };

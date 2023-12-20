@@ -6,12 +6,16 @@ import {
   getSubscriptionsError,
   getSubscriptionsStart,
   getSubscriptionsSucess,
+  loadUserError,
   loadUserStart,
   loadUserSuccess,
   logoutUserError,
   logoutUserStart,
   logoutUserSuccess,
   setUser,
+  setUserError,
+  setUserStart,
+  setUserSuccess,
   subscribeError,
   subscribeStart,
   subscribeSuccess,
@@ -22,22 +26,26 @@ import { FORM_ERROR } from "final-form";
 
 export const signUpUserThunk = ({ username, email, password }) => {
   return async function (dispatch) {
+    dispatch(setUserStart());
     return authApi
       .signUp({ username, email, password })
-      .then((res) => dispatch(setUser(res.data.user)))
+      .then((res) => dispatch(setUserSuccess(res.data.user)))
       .catch((err) => {
-        return { [FORM_ERROR]: err?.response?.message || "Login error" };
+        dispatch(setUserError(err));
+        return { [FORM_ERROR]: err?.message || "Login error" };
       });
   };
 };
 
 export const signInUserThunk = ({ username, password }) => {
   return async function (dispatch) {
+    dispatch(setUserStart());
     return authApi
       .signIn({ username, password })
-      .then((res) => dispatch(setUser(res.data.user)))
+      .then((res) => dispatch(setUserSuccess(res.data.user)))
       .catch((err) => {
-        return { [FORM_ERROR]: err?.response?.message || "Login error" };
+        dispatch(setUserError(err));
+        return { [FORM_ERROR]: err?.message || "Login error" };
       });
   };
 };
@@ -51,36 +59,39 @@ export const getUserThunk = () => {
         dispatch(loadUserSuccess(res.user));
       })
       .catch((err) => {
-        console.log(err);
+        dispatch(loadUserError(err));
       });
   };
 };
 
 export const logoutUserThunk = () => {
-  return async function (dispatch) {
+  return async function (dispatch, getState, router) {
     dispatch(logoutUserStart());
     return authApi
       .logOut()
-      .then(() => dispatch(logoutUserSuccess()))
+      .then(() => {
+        dispatch(logoutUserSuccess());
+        router.navigate(`/`);
+      })
       .catch((err) => dispatch(logoutUserError(err)));
   };
 };
 
-export const userSubscribe = (authUserId, userId) => {
+export const userSubscribe = (userId) => {
   return async function (dispatch) {
     dispatch(subscribeStart());
     return authApi
-      .subscribe(authUserId, userId)
+      .subscribe(userId)
       .then((res) => dispatch(subscribeSuccess(res.user)))
       .catch((err) => dispatch(subscribeError(err)));
   };
 };
 
-export const userUnsubscribe = (authUserId, userId) => {
+export const userUnsubscribe = (userId) => {
   return async function (dispatch) {
     dispatch(unsubscribeStart());
     return authApi
-      .unsubscribe(authUserId, userId)
+      .unsubscribe(userId)
       .then((res) => dispatch(unsubscribeSuccess(res.user)))
       .catch((err) => dispatch(subscribeError(err)));
   };
@@ -91,7 +102,7 @@ export const getUserSubscriptionsThunk = (userId) => {
     dispatch(getSubscriptionsStart());
     return authApi
       .loadUserSubscriptions(userId)
-      .then((res) => dispatch(getSubscriptionsSucess(res.user)))
+      .then((res) => dispatch(getSubscriptionsSucess(res.subscriptions)))
       .catch((err) => dispatch(getSubscriptionsError(err)));
   };
 };

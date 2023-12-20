@@ -60,7 +60,7 @@ async function fetchDB(endpoint, method = "GET", body = null, headers = {}) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("API request failed:", error);
+    // console.error("API request failed:", error);
     throw error;
   }
 }

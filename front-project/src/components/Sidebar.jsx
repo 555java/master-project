@@ -9,7 +9,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import React, { Fragment } from "react";
 
-const SidebarList = ({ isLogged }) => {
+const SidebarList = ({ isLogged, setIsDrawerOpen }) => {
   return (
     <Box
       sx={{
@@ -21,12 +21,18 @@ const SidebarList = ({ isLogged }) => {
         {isLogged ? (
           <Fragment>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="User logged in" />
+              <ListItemButton disabled>
+                <ListItemText secondary="You are logged in" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component={RouterLink} to="explore">
+              <ListItemButton
+                component={RouterLink}
+                to="explore"
+                onClick={() => {
+                  setIsDrawerOpen(false);
+                }}
+              >
                 <ListItemText primary="Explore all users" />
               </ListItemButton>
             </ListItem>
@@ -48,7 +54,7 @@ export const SideBar = ({ setIsDrawerOpen, isOpen, isLogged }) => {
         setIsDrawerOpen(false);
       }}
     >
-      <SidebarList isLogged={isLogged} />
+      <SidebarList isLogged={isLogged} setIsDrawerOpen={setIsDrawerOpen} />
     </Drawer>
   );
 };

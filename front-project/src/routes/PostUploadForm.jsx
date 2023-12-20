@@ -8,10 +8,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { TextFieldAdapter } from "../components/TextFieldAdapter";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, AlertTitle, Typography } from "@mui/material";
-import { addPostThunk } from "../features-store/post/post.thunks";
-import { getUserId, getUserName } from "../features-store/auth/auth.selectors";
+import { addPostThunk } from "../redux/post/post.thunks";
+import { getUserId, getUserName } from "../redux/auth/auth.selectors";
 import { FileField } from "../components/FileFieldAdapter";
-import { getIsPostUploading } from "../features-store/post/post.selectors";
+import { getIsPostUploading } from "../redux/post/post.selectors";
 
 export default function PostUploadForm() {
   const isPostUploading = useSelector(getIsPostUploading);

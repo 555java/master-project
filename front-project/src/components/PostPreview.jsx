@@ -20,7 +20,7 @@ export const PostPreview = ({ post }) => {
         top: "50%",
         left: "50%",
         transform: "translate(-50%,-50%)",
-        overflow: "scroll",
+        overflow: "auto",
       }}
     >
       <CardHeader subheader={post.title} />
@@ -32,6 +32,7 @@ export const PostPreview = ({ post }) => {
             maxWidth: "100vw",
             width: "100%",
             objectFit: "contain",
+            aspectRatio: "1.4",
           }}
           alt="post preview"
         />

@@ -24,6 +24,7 @@ export const AboutPage = () => {
             margin: "0",
             padding: "0",
             maxHeight: "600px",
+            aspectRatio: "1.8",
           }}
           alt="photo of sunset with camera view"
         />

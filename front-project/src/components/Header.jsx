@@ -9,10 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { SideBar } from "./Sidebar";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  getIsLoggedIn,
-  getLogoutError,
-} from "../features-store/auth/auth.selectors";
+import { getIsLoggedIn, getLogoutError } from "../redux/auth/auth.selectors";
 import { Fragment } from "react";
 import { Alert, Link } from "@mui/material";
 import AccountMenu from "./AccountMenu";
