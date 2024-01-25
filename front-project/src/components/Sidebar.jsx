@@ -18,28 +18,28 @@ const SidebarList = ({ isLogged, setIsDrawerOpen }) => {
       }}
     >
       <List>
-        {isLogged ? (
-          <Fragment>
-            <ListItem disablePadding>
-              <ListItemButton disabled>
-                <ListItemText secondary="You are logged in" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                component={RouterLink}
-                to="explore"
-                onClick={() => {
-                  setIsDrawerOpen(false);
-                }}
-              >
-                <ListItemText primary="Explore all users" />
-              </ListItemButton>
-            </ListItem>
-          </Fragment>
-        ) : (
-          <></>
-        )}
+        <Fragment>
+          <ListItem disablePadding>
+            <ListItemButton disabled>
+              <ListItemText
+                secondary={`${
+                  isLogged ? "You are logged in" : "You are not logged"
+                }`}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              component={RouterLink}
+              to="explore"
+              onClick={() => {
+                setIsDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="Explore all users" />
+            </ListItemButton>
+          </ListItem>
+        </Fragment>
       </List>
     </Box>
   );
