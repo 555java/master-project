@@ -20,8 +20,8 @@ export const getIsSubscriptionsLoading = (state) =>
 export const getUserSubscriptions = (state) => state.auth.subscriptions;
 export const getIsSubscribed = (state, userId) => {
   return (
-    state.auth.user.subscriptions.includes(userId) ||
-    state.auth.user.subscriptions.find((user) => user._id === userId)
+    state.auth.user?.subscriptions.includes(userId) ||
+    state.auth.user?.subscriptions.find((user) => user._id === userId)
   );
 };
 

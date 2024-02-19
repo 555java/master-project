@@ -14,12 +14,10 @@ import {
 import { UserHeader } from "../components/UserHeader";
 import Grid from "@mui/material/Unstable_Grid2";
 import { UserPostsContainer } from "../components/UserPostsContainer";
-import { getIsLoggedIn } from "../redux/auth/auth.selectors";
 
 export const UserPostsListPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const isLoggedIn = useSelector(getIsLoggedIn);
   const posts = useSelector((state, userId) =>
     getBrowsedUserPosts(state, userId)
   );
@@ -31,15 +29,6 @@ export const UserPostsListPage = () => {
   useEffect(() => {
     dispatch(loadUserPostsThunk(params.userId));
   }, [params.userId, dispatch]);
-  if (!isLoggedIn) {
-    return (
-      <Grid>
-        <Alert severity="warning">
-          Only logged users can watch profiles! Please log in or sign up.
-        </Alert>
-      </Grid>
-    );
-  }
   if (error) {
     return (
       <Grid>

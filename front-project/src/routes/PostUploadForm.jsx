@@ -39,8 +39,6 @@ export default function PostUploadForm() {
           }
           return dispatch(
             addPostThunk({
-              authorId: authorId,
-              authorUsername: authorUsername,
               description: values.description,
               title: values.title,
               images: values.imageFiles,

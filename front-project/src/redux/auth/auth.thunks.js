@@ -44,6 +44,7 @@ export const signInUserThunk = ({ username, password }) => {
       .signIn({ username, password })
       .then((res) => dispatch(setUserSuccess(res.data.user)))
       .catch((err) => {
+        console.log("error");
         dispatch(setUserError(err));
         return { [FORM_ERROR]: err?.message || "Login error" };
       });
@@ -71,7 +72,7 @@ export const logoutUserThunk = () => {
       .logOut()
       .then(() => {
         dispatch(logoutUserSuccess());
-        router.navigate(`/`);
+        router.navigate(`/about`);
       })
       .catch((err) => dispatch(logoutUserError(err)));
   };

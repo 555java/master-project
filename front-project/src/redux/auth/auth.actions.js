@@ -20,6 +20,7 @@ import {
   AUTH_USER_LOAD_ERROR,
   AUTH_SET_USER_START,
   AUTH_SET_USER_SUCCESS,
+  AUTH_SET_USER_ERROR,
 } from "./auth.constants";
 
 export const setUserStart = () => {
@@ -29,7 +30,7 @@ export const setUserSuccess = (user) => {
   return { type: AUTH_SET_USER_SUCCESS, payload: user };
 };
 export const setUserError = (err) => {
-  return { type: AUTH_SET_USER_START, payload: err };
+  return { type: AUTH_SET_USER_ERROR, payload: err };
 };
 
 export const loadUserStart = () => {

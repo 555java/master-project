@@ -1,10 +1,8 @@
 import fetchDB from "../utils/api";
 
 export const postsApi = {
-  addPost({ authorId, authorUsername, description, title, images }) {
+  addPost({ description, title, images }) {
     return fetchDB("posts/new", "POST", {
-      authorId,
-      authorUsername,
       description,
       title,
       images,
