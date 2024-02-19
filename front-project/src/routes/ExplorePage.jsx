@@ -12,14 +12,13 @@ import { UsersList } from "../components/UsersList";
 
 export const ExplorePage = () => {
   const dispatch = useDispatch();
-  const authUserId = useSelector(getUserId);
   const allUsers = useSelector(getAllUsers);
   const isUsersLoading = useSelector(getIsAllUsersLoading);
   const usersListError = useSelector(getUsersListError);
 
   useEffect(() => {
     dispatch(getAllUsersThunk());
-  }, [authUserId, dispatch]);
+  }, [dispatch]);
 
   if (isUsersLoading)
     return (

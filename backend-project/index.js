@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const User = require("./src/models/userModel");
-
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -20,6 +19,7 @@ const cors = require("cors");
 const path = require("path");
 const dbUrl = process.env.DB_URL;
 const frontURl = process.env.FRONTEND_URL;
+const secret = process.env.SECRET;
 
 mongoose.connect(dbUrl);
 
@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "Shh, its a secret!",
+    secret: secret,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -66,7 +66,6 @@ const port = 8080;
 app.use((err, req, res, next) => {
   const status = err?.status || 500;
   const message = err?.message || "Server error";
-
   res.status(status).json({ isSuccess: false, message });
 });
 

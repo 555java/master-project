@@ -9,17 +9,11 @@ import {
   loadPostSuccess,
 } from "./post.action";
 
-export const addPostThunk = ({
-  authorId,
-  authorUsername,
-  description,
-  title,
-  images,
-}) => {
+export const addPostThunk = ({ description, title, images }) => {
   return async function (dispatch, getState, router) {
     dispatch(addPostStart());
     return postsApi
-      .addPost({ authorId, authorUsername, description, title, images })
+      .addPost({ description, title, images })
       .then((res) => {
         dispatch(addPostSuccess(res.newPost));
         router.navigate(`/posts/${res.newPost._id}`);

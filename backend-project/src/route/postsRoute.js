@@ -30,17 +30,18 @@ router.post(
       const images = req.files.map((file) => {
         return { filename: file.filename, url: file.path };
       });
-
+      if (!req.user) {
+        return next({ status: 401, message: "Unauthorized user" });
+      }
       const newPost = new Post({
         title: req.body.title,
         description: req.body.description,
-        authorId: req.body.authorId,
-        authorUsername: req.body.authorUsername,
+        authorId: req.user._id,
+        authorUsername: req.user.username,
         image: images,
       });
-
       await newPost.save();
-      const user = await User.findById(req.body.authorId);
+      const user = await User.findById(req.user._id);
       user.posts.push(newPost._id);
       await user.save();
       res.status(200).send({ newPost });
